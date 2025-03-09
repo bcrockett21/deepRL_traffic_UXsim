@@ -11,7 +11,7 @@ from stable_baselines3.common.callbacks import CheckpointCallback
 from stable_baselines3.common.callbacks import CallbackList
 from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.sac.policies import Actor
-from downtown_lexington import DowntownLexington
+from downtown_lexington import Lexington
 from plot import PlotRewards
 import pickle
 import torch.nn as nn
@@ -25,7 +25,7 @@ traffic_flows = ["low", "medium", "high"]
 network_sizes = ["downtown"]
 models = ["PPO", "A2C", "SAC", "TD3"]
 # downtown lexington
-coordinates = [38.053903704276856, 38.0329942363066, -84.48193338399388, -84.51057394078408]
+
 
 
 parser = argparse.ArgumentParser(description="Define traffic flow and model type.")
@@ -34,14 +34,14 @@ args = parser.parse_args()
 timesteps = args.timesteps
 
 
-class Lexington(gym.Env):
+class LexingtonDeepRL(gym.Env):
     def __init__ (self, traffic_flow, model, network_size, time_steps):
         self.traffic_flow = traffic_flow
         self.model = model
         self.network_size = network_size
         self.time_steps = time_steps
         self.step_count = 0
-        self.step_count = 0
+        self.coordinates = [38.053903704276856, 38.0329942363066, -84.48193338399388, -84.51057394078408]
         self.log_steps = []
         self.log_rewards = []
         self.log_queues = []
@@ -50,7 +50,7 @@ class Lexington(gym.Env):
         
 
         if self.network_size == "downtown":
-            self.network = DowntownLexington(self.traffic_flow, show=True)
+            self.network = Lexington(self.coordinates, self.traffic_flow, show=True)
             self.W, self.links, self.intersections, self.action_space, self.observation_space = self.network.create()
 
 
@@ -221,7 +221,7 @@ for flow in traffic_flows:
 
 
                 if model == "PPO":
-                    env = Lexington(traffic_flow=flow, model=model, network_size=size, time_steps=timesteps)
+                    env = LexingtonDeepRL(traffic_flow=flow, model=model, network_size=size, time_steps=timesteps)
                     # PPO model
                     PPO_model = PPO(
                         "MlpPolicy", 
@@ -256,7 +256,7 @@ for flow in traffic_flows:
 
 
                 elif model == "A2C":
-                    env = Lexington(traffic_flow=flow, model=model, network_size=size, time_steps=timesteps)
+                    env = LexingtonDeepRL(traffic_flow=flow, model=model, network_size=size, time_steps=timesteps)
                     # A2C model
                     A2C_model = A2C("MlpPolicy", 
                                     env, 
@@ -305,7 +305,7 @@ for flow in traffic_flows:
                     else:
                         target_entropy = -26
 
-                    env = Lexington(traffic_flow=flow, model=model, network_size=size, time_steps=timesteps)
+                    env = LexingtonDeepRL(traffic_flow=flow, model=model, network_size=size, time_steps=timesteps)
                     # SAC model
                     SAC_model = SAC(
                         "MlpPolicy", 
@@ -337,7 +337,7 @@ for flow in traffic_flows:
 
                 else:
 
-                    env = Lexington(traffic_flow=flow, model=model, network_size=size, time_steps=timesteps)
+                    env = LexingtonDeepRL(traffic_flow=flow, model=model, network_size=size, time_steps=timesteps)
                     # TD3 model
                     TD3_model = TD3("MlpPolicy", 
                         env, 
