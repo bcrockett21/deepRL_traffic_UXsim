@@ -38,12 +38,12 @@ class FullNetwork:
 
             self.W = World(
                         name = f"{self.name}",
-                        tmax = 9600,
+                        tmax = 256*30,
                         deltan = 5,
                         show_mode = 0,
-                        random_seed = 42,
                         reduce_memory_delete_vehicle_route_pref = True,
-                        print_mode=0
+                        print_mode=0,
+                        random_seed=42
                     )
 
             # start node
@@ -131,9 +131,9 @@ class FullNetwork:
             self.W24 = self.W.addNode("W24", -1, 24)
             self.E26 = self.W.addNode("E26", 1, 26)
             self.W26 = self.W.addNode("W26", -1, 26)
-            self.N26 = self.W.addNode("N26", 0, 27)
+            self.t = self.W.addNode("N26", 0, 27)
 
-            print("-> Nodes")
+
 
 
             self.cross_streets = [[self.E1, self.I1], [self.E2, self.I2], [self.W2, self.I2], [self.E3, self.I3], [self.W3, self.I3],  
@@ -298,7 +298,6 @@ class FullNetwork:
 
 
 
-            print("-> Links")
 
 
             # add demands based on selected traffic level
@@ -317,7 +316,7 @@ class FullNetwork:
                     self.W.adddemand_nodes2nodes2(destinations, origins, t, t+dt, demand)
                 
 
-                print("-> Demand")
+
                 self.W.save(fname)
 
 
@@ -335,7 +334,7 @@ class FullNetwork:
                     self.W.adddemand_nodes2nodes2(destinations, origins, t, t+dt, demand)
 
 
-                print("-> Demand")
+
                 self.W.save(fname)
 
 
@@ -352,23 +351,22 @@ class FullNetwork:
                     demand = random.uniform(0.65, 0.85)
                     self.W.adddemand_nodes2nodes2(destinations, origins, t, t+dt, demand)
 
-                print("-> Demand")
+
                 self.W.save(fname)
 
-            return  print(f"{self.name} environment generation complete.")
+
 
 
     def load_network(self, show):
         fname = Path(f"/Users/blakecrockett/Documents/ds_capstone/scenarios/{self.traffic_flow}_full.pkl")
 
-        if fname.exists():
+        #if fname.exists():
             #print("Loading World from file...")
-            pass
+        #    pass
+        #else:
 
-        else:
-
-            print("Generating new World...")
-            self.createAndSave()
+        #print("Generating new World...")
+        self.createAndSave()
 
         with open(f"{fname}", "rb") as f:
             W = pickle.load(f)
@@ -384,3 +382,4 @@ class FullNetwork:
                 links.append(l)
 
         return W, links, intersections, self.action_space, self.observation_space
+    
