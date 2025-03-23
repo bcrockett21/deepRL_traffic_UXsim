@@ -34,7 +34,7 @@ class SmallNetwork:
 
             self.W = World(
                         name = f"{self.name}",
-                        tmax = 9600,
+                        tmax = 256*30,
                         deltan = 5,
                         show_mode = 0,
                         reduce_memory_delete_vehicle_route_pref = True,
@@ -68,7 +68,6 @@ class SmallNetwork:
             self.E4 = self.W.addNode("E4", 1, 5)
             self.W4 = self.W.addNode("W4", -1, 5)
 
-            print("-> Nodes")
 
 
             self.cross_streets = [[self.E1, self.I1], [self.W1, self.I1], [self.E2, self.I2], 
@@ -131,8 +130,6 @@ class SmallNetwork:
 
 
 
-            print("-> Links")
-
 
             # add demands based on selected traffic level
 
@@ -152,7 +149,7 @@ class SmallNetwork:
                     self.W.adddemand_nodes2nodes2(destinations, origins, t, t+dt, demand)
                 
 
-                print("-> Demand")
+
                 self.W.save(fname)
 
 
@@ -169,7 +166,7 @@ class SmallNetwork:
                     self.W.adddemand_nodes2nodes2(destinations, origins, t, t+dt, demand)
 
 
-                print("-> Demand")
+
                 self.W.save(fname)
 
 
@@ -187,23 +184,22 @@ class SmallNetwork:
                     demand = random.uniform(0.65, 0.85)
                     self.W.adddemand_nodes2nodes2(destinations, origins, t, t+dt, demand)
 
-                print("-> Demand")
+   
                 self.W.save(fname)
 
-            return  print(f"{self.name} environment generation complete.")
 
 
 
     def load_network(self, show):
         fname = Path(f"/Users/blakecrockett/Documents/ds_capstone/scenarios/{self.traffic_flow}_small.pkl")
 
-        if fname.exists():
+        #if fname.exists():
             #print("Loading World from file...")
-            pass
-        else:
+        #    pass
+        #else:
 
-            print("Generating new World...")
-            self.createAndSave()
+        #print("Generating new World...")
+        self.createAndSave()
 
         with open(f"{fname}", "rb") as f:
             W = pickle.load(f)
