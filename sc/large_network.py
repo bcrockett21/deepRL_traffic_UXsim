@@ -38,13 +38,12 @@ class LargeNetwork:
 
             self.W = World(
                         name = f"{self.name}",
-                        tmax = 9600,
+                        tmax = 256*30,
                         deltan = 5,
                         show_mode = 0,
-                        random_seed = 42,
                         reduce_memory_delete_vehicle_route_pref = True,
-                        print_mode=0
-
+                        print_mode=0,
+                        random_seed=42
                     )
 
             # start node
@@ -98,7 +97,6 @@ class LargeNetwork:
             self.E12 = self.W.addNode("E12", 1, 12)
             self.W12 = self.W.addNode("W12", -1, 12)
 
-            print("-> Nodes")
 
 
             self.cross_streets = [[self.E1, self.I1], [self.W1, self.I1], [self.E2, self.I2], 
@@ -203,7 +201,6 @@ class LargeNetwork:
 
 
 
-            print("-> Links")
 
 
             # add demands based on selected traffic level
@@ -221,7 +218,6 @@ class LargeNetwork:
                     self.W.adddemand_nodes2nodes2(destinations, origins, t, t+dt, demand)
                 
 
-                print("-> Demand")
                 self.W.save(fname)
 
 
@@ -239,7 +235,7 @@ class LargeNetwork:
                     self.W.adddemand_nodes2nodes2(destinations, origins, t, t+dt, demand)
 
 
-                print("-> Demand")
+
                 self.W.save(fname)
 
 
@@ -256,24 +252,23 @@ class LargeNetwork:
                     demand = random.uniform(0.65, 0.85)
                     self.W.adddemand_nodes2nodes2(destinations, origins, t, t+dt, demand)
 
-                print("-> Demand")
+
                 self.W.save(fname)
 
-            return  print(f"{self.name} environment generation complete.")
+
     
 
 
     def load_network(self, show):
         fname = Path(f"/Users/blakecrockett/Documents/ds_capstone/scenarios/{self.traffic_flow}_large.pkl")
 
-        if fname.exists():
+        #if fname.exists():
             #print("Loading World from file...")
-            pass
+        #    pass
+        #else:
 
-        else:
-
-            print("Generating new World...")
-            self.createAndSave()
+        #print("Generating new World...")
+        self.createAndSave()
 
         with open(f"{fname}", "rb") as f:
             W = pickle.load(f)
