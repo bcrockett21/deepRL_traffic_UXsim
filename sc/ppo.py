@@ -209,7 +209,3 @@ class UXSimPPO:
 
             self.scheduler.step()
             self.rewards, self.log_probs, self.actions, self.states, self.values = [], [], [], [], []
-
-            
-
-    
