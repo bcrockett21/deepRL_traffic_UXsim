@@ -1,8 +1,8 @@
 # deepRL_traffic_UXsim
-Testing deep learning methods on a simulated environment based on Nicholasville Rd in Lexington, KY and created using the UXsim python library.
+Deep learning, Gymnamsium-compatible environment using UXsim traffic simulation
 ---
 
-This is an ongoing project that will serve as my capstone for a Master's in Data Science degree.
+This environment was created to test the Proximal Policy Optimization RL method on its ability reduce traffic congestion and increase efficiency through traffic signal control
 
 ## Goals
 - Create a realistic model of Nicholasville Rd with low, medium, and high traffic congestion.
