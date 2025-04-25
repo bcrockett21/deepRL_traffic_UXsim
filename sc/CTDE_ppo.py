@@ -7,10 +7,9 @@ import pandas as pd
 from torch.utils.data import DataLoader, TensorDataset
 
 
-
-
-
-
+"""
+PPO RL using Centralized Training with Decentralized Execution
+"""
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
