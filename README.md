@@ -7,4 +7,4 @@ This environment was created to test the Proximal Policy Optimization RL method 
 ## Road Networks
 - To learn how to create your own networks, visit [UXsim's GitHub page](https://github.com/toruseo/UXsim)
 - Example networks are modeled after roads in Lexington, Kentucky.
-- Two are created using UCsim's OpenStreetMap feature
+- Two are created using UXsim's OpenStreetMap feature
